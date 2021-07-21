@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const WebpackBar = require('webpackbar')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+
 
 module.exports = {
     entry: {
@@ -131,6 +133,15 @@ module.exports = {
         ]
     },
     optimization: {
+        minimize: !isDev,
+        minimizer: [
+          !isDev && new TerserPlugin({
+            extractComments: false,
+            terserOptions: {
+              compress: { pure_funcs: ['console.log'] },
+            }
+          })
+        ].filter(Boolean),
         splitChunks: {
           chunks: 'all',
           name: false,
