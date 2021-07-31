@@ -1,10 +1,13 @@
-import React from 'react'
+import React, {memo} from 'react'
 
-const SubCounter = (props : any) => {
-    console.log("sub render...")
+const SubCounter = ({value, onClick} : any) => {
+    console.log("sub render...", value)
     return (
-        <h4>{props.value}</h4>
+        <div>
+            <h4>{value.count}</h4>
+            <div className="btn" onClick={onClick}>SubCounter add</div>
+        </div>
     )
 }
 
-export default SubCounter
+export default memo(SubCounter)
